@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Ligne from './Ligne'
+import Ligne from './Ligne';
+import axios from 'axios';
 
 class Grille extends Component {
     state = {
@@ -8,6 +9,7 @@ class Grille extends Component {
         nbr: 1,
         maintientDecompetance: 'non',
         lignes: [],
+        tuteurs: ['michel'],
     }
 
     handleInput = (e) => {
@@ -29,12 +31,23 @@ class Grille extends Component {
             this.setState({
                 ...this.state,
                 lignes: arrayLignes,
-                titre: '',
                 tache: '',
                 nbr: 1,
                 maintientDecompetance: 'non',
             })
         }
+    }
+
+    savegarderLaGrille = () => {
+        let newGrille = {
+            titre: this.state.titre,
+            taches: this.state.lignes,
+            tuteurs: this.state.tuteurs,
+        };
+        axios.post('http://localhost:3001/api/habilitation/add', newGrille)
+            .then(response => {
+                console.log('voila la réponse', response);
+            });
     }
 
 
@@ -128,7 +141,10 @@ class Grille extends Component {
                 </section>
 
                 <section id="export dans la base de donnée">
-                    <button className='btn btn-block btn-info'> Sauvgarder la grille </button>
+                    <button
+                        onClick={this.savegarderLaGrille}
+                        className='btn btn-block btn-info'
+                    > Sauvgarder la grille </button>
                 </section>
 
             </div >

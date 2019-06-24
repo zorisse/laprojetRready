@@ -8,8 +8,6 @@ router.get('/userList', (req, res, next) => {
     .then(users =>
       res.json(users)
     )
-
-
 });
 
 module.exports = router;

@@ -90,5 +90,28 @@ app.use('/', index);
 app.use('/api', require("./routes/auth-routes.js"));
 
 const userList = require('./routes/userlist');
-app.use('/api/', userList);
+app.use('/api', userList);
+
+const habilitation = require('./routes/habilitation_route');
+app.use('/api', habilitation)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////
 module.exports = app;
