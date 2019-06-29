@@ -10,7 +10,9 @@ class Grille extends Component {
         nbr: 1,
         maintientDecompetance: 'non',
         lignes: [],
-        tuteurs: ['michel'],
+        tuteur1: '',
+        tuteur2: '',
+
     }
 
     handleInput = (e) => {
@@ -43,7 +45,7 @@ class Grille extends Component {
         let newGrille = {
             titre: this.state.titre,
             taches: this.state.lignes,
-            tuteurs: this.state.tuteurs,
+            tuteurs: [this.state.tuteur1, this.state.tuteur2],
         };
 
         axios.post('http://localhost:3001/api/habilitation/add', newGrille)
@@ -70,6 +72,28 @@ class Grille extends Component {
                                     type="text"
                                     className="form-control text-center"
                                     placeholder="Titre" id='Ajouter une Titre' />
+                            </div>
+                        </div>
+                        <div className="form-row my-2 d-flex ">
+                            <div className="col my-1">
+                                <label for="Tuteur">Ajouter un Tuteur  </label>
+                                <input
+                                    value={this.state.tuteur1}
+                                    name='tuteur1'
+                                    onChange={this.handleInput}
+                                    type="text"
+                                    className="form-control text-center"
+                                    placeholder="Tuteur 1" id='Ajouter un Tuteur' />
+                            </div>
+                            <div className="col my-1">
+                                <label for="Tuteur">Ajouter un Tuteur  </label>
+                                <input
+                                    value={this.state.tuteur2}
+                                    name='tuteur2'
+                                    onChange={this.handleInput}
+                                    type="text"
+                                    className="form-control text-center"
+                                    placeholder="Tuteur 2" id='Ajouter un Tuteur' />
                             </div>
                         </div>
                         <div className="form-row my-2 ">

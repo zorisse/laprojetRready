@@ -18,9 +18,10 @@ router.post(`${habilitation}add`, (req, res, next) => {
         titre, tuteurs, taches
     })
         .then(Habilitation => {
-            console.log(Habilitation);
+            res.json(Habilitation)
         })
         .catch(err => console.log(err))
 })
+
 
 module.exports = router;

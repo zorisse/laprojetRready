@@ -11,7 +11,7 @@ import Login from './components/user-pages/Login';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Grille from './components/habilitations/Grille'
-import grille2 from './components/habilitations/GrilleContainer'
+
 
 
 
@@ -52,7 +52,7 @@ class App extends Component {
             <NavLink to="/signup-page"> Signup </NavLink>
             <NavLink to="/login-page"> Login </NavLink>
             <NavLink to="/grille"> Grille </NavLink>
-            <NavLink to="/grille2"> Grille 2</NavLink>
+
           </nav >
         </header>
 
@@ -77,7 +77,6 @@ class App extends Component {
           } />
 
         </Switch>
-
 
 
         <footer>
