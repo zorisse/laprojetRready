@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { Switch, NavLink, Route } from "react-router-dom";
+import { connect } from 'react-redux';
 
 import axios from "axios";
 
@@ -10,6 +11,7 @@ import Login from './components/user-pages/Login';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Grille from './components/habilitations/Grille'
+import grille2 from './components/habilitations/GrilleContainer'
 
 
 
@@ -34,6 +36,7 @@ class App extends Component {
   // (must be defined in App.js since it's the owner of "currentUser" now)
   syncCurrentUser(user) {
     this.setState({ currentUser: user });
+    this.props.isConnected(user);
   }
 
 
@@ -48,7 +51,8 @@ class App extends Component {
             <NavLink to="/"> Home </NavLink>
             <NavLink to="/signup-page"> Signup </NavLink>
             <NavLink to="/login-page"> Login </NavLink>
-            <NavLink to="/grille"> Login </NavLink>
+            <NavLink to="/grille"> Grille </NavLink>
+            <NavLink to="/grille2"> Grille 2</NavLink>
           </nav >
         </header>
 
@@ -57,6 +61,7 @@ class App extends Component {
           {/* <Route path="/somePage" component={ someComponentThatWillRenderWhenUSerClickThisLink }   /> */}
           <Route exact path="/" component={Home} />
           <Route exact path="/grille" component={Grille} />
+          <Route exact path="/grille2" component={Grille} />
 
 
           {/*  */}
@@ -77,10 +82,32 @@ class App extends Component {
 
         <footer>
           Made with at Ironhack - PTWD 2019
-        </footer>
-      </div>
+
+          <p>{
+            this.state.currentUser ? console.log("hey ", this.state.currentUser.fullName) : ""
+
+
+          }</p>
+          <p> lapin : {this.props.user} and {this.props.ll}</p>
+
+        </footer >
+      </div >
     );
   }
 }
 
-export default App;
+const stateToProps = state => {
+  return {
+    user: state.UserReducer.currentUser.fullName,
+    ll: state.UserReducer.lapin,
+  }
+}
+
+const actionDisppatchToProps = dispatch => {
+
+  return {
+    isConnected: (user) => dispatch({ type: 'STORE_USER', currentUser: user })
+  }
+}
+
+export default connect(stateToProps, actionDisppatchToProps)(App);

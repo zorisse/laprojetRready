@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Ligne from './Ligne';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 class Grille extends Component {
@@ -44,6 +45,7 @@ class Grille extends Component {
             taches: this.state.lignes,
             tuteurs: this.state.tuteurs,
         };
+
         axios.post('http://localhost:3001/api/habilitation/add', newGrille)
             .then(response => {
                 console.log('voila la réponse', response);
@@ -56,7 +58,7 @@ class Grille extends Component {
         return (
             <div className=' container '>
                 <section id="formulaire de création ">
-                    <h1> Créer une nouvelle grille d'habilitation</h1>
+                    <h1> Créer une nouvelle grille d'habilitation par {this.props.user}</h1>
                     <div id='form' className='my-5 p-3 bg-light' style={{ width: '60vw', margin: 'auto' }}>
                         <div className="form-row my-2 d-flex ">
                             <div className="col my-1">
@@ -152,6 +154,23 @@ class Grille extends Component {
     }
 }
 
-export default Grille;
+
+const stateToProps = state => {
+    return {
+        user: state.UserReducer.currentUser.fullName,
+        ll: state.UserReducer.lapin,
+    }
+}
+
+const actionDisppatchToProps = dispatch => {
+
+    return {
+        // isConnected: (user) => dispatch({ type: 'STORE_USER', currentUser: user })
+    }
+}
+
+export default connect(stateToProps, actionDisppatchToProps)(Grille);
+
+// export default Grille;
 
 
