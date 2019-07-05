@@ -9,6 +9,7 @@ class Grille extends Component {
         tache: '',
         nbr: 1,
         maintientDecompetance: 'non',
+        isDone: false,
         lignes: [],
         tuteur1: '',
         tuteur2: '',
@@ -26,8 +27,8 @@ class Grille extends Component {
 
 
     ajouterUneLigne = (e) => {
-        let { tache, nbr, maintientDecompetance } = this.state
-        let ligne = { tache, nbr, maintientDecompetance }
+        let { tache, nbr, maintientDecompetance, isDone } = this.state
+        let ligne = { tache, nbr, maintientDecompetance, isDone }
         let arrayLignes = this.state.lignes
         for (let index = 0; index < ligne.nbr; index++) {
             arrayLignes.push(ligne)
@@ -60,7 +61,7 @@ class Grille extends Component {
         return (
             <div className=' container '>
                 <section id="formulaire de création ">
-                    <h1> Créer une nouvelle grille d'habilitation par {this.props.user}</h1>
+                    <h1> Créer une nouvelle grille d'habilitation par {this.props.user ? this.props.user.fullName : ""}</h1>
                     <div id='form' className='my-5 p-3 bg-light' style={{ width: '60vw', margin: 'auto' }}>
                         <div className="form-row my-2 d-flex ">
                             <div className="col my-1">
@@ -181,8 +182,9 @@ class Grille extends Component {
 
 const stateToProps = state => {
     return {
-        user: state.UserReducer.currentUser.fullName,
+        user: state.UserReducer.currentUser,
         ll: state.UserReducer.lapin,
+        userFull: state.UserReducer.currentUserFull,
     }
 }
 

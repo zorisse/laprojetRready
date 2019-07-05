@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+//import axios from 'axios';
 import './ligne.css'
 
 class Ligne extends Component {
@@ -20,13 +21,17 @@ class Ligne extends Component {
         let strClassActive = 'btn btn-sm btn-warning';
         // let strClassValidationFalse = 'btn btn-sm btn-primary';
         // let strClassValidationTrue = 'btn btn-sm btn-success disabled';
+
         this.setState({
             ...this.state,
             validated: 'btn btn-sm btn-success disabled',
             verificationButtonTuteurClass: strClassActive,
             verificationSuccess: true,
             etatTRStyle: 1,
-        })
+        });
+
+        this.props.recupTache();
+
     }
 
     verificationTuteur = (e) => {
@@ -40,12 +45,7 @@ class Ligne extends Component {
             txt += ladate.getDate() + "/" + (ladate.getMonth() + 1) + "/" + ladate.getFullYear()
             // on change le txt 
             console.log(txt);
-
             // on change la couleur du boutton 
-
-
-
-
             this.setState({
                 ...this.state, etatTRStyle: 2, verificationButtonTuteurTxt: txt, verificationButtonTuteurClass: "btn btn-sm btn-success disabled",
             })

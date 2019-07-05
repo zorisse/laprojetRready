@@ -11,6 +11,7 @@ import Login from './components/user-pages/Login';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Grille from './components/habilitations/Grille'
+import Habilitation from './components/habilitations/Habilitation';
 
 
 
@@ -29,6 +30,15 @@ class App extends Component {
         // console.log("Check User in APP.JS: ",responseFromBackend.data)
         const { userDoc } = responseFromBackend.data;
         this.syncCurrentUser(userDoc);
+        if (userDoc) {
+          this.props.isConnected(userDoc);
+          this.props.isConnectedFULL(userDoc);
+          console.log('from apps', this.props.userFull.user)
+        } else {
+          this.props.isConnected('No User');
+          this.props.isConnectedFULL('No User');
+        }
+
       });
   }
 
@@ -36,7 +46,6 @@ class App extends Component {
   // (must be defined in App.js since it's the owner of "currentUser" now)
   syncCurrentUser(user) {
     this.setState({ currentUser: user });
-    this.props.isConnected(user);
   }
 
 
@@ -52,6 +61,7 @@ class App extends Component {
             <NavLink to="/signup-page"> Signup </NavLink>
             <NavLink to="/login-page"> Login </NavLink>
             <NavLink to="/grille"> Grille </NavLink>
+            <NavLink to="/habilitation"> habilitation </NavLink>
 
           </nav >
         </header>
@@ -61,7 +71,7 @@ class App extends Component {
           {/* <Route path="/somePage" component={ someComponentThatWillRenderWhenUSerClickThisLink }   /> */}
           <Route exact path="/" component={Home} />
           <Route exact path="/grille" component={Grille} />
-          <Route exact path="/grille2" component={Grille} />
+          <Route exact path="/habilitation" component={Habilitation} />
 
 
           {/*  */}
@@ -83,11 +93,9 @@ class App extends Component {
           Made with at Ironhack - PTWD 2019
 
           <p>{
-            this.state.currentUser ? console.log("hey ", this.state.currentUser.fullName) : ""
-
-
+            this.state.currentUser ? this.state.currentUser.fullName : ""
           }</p>
-          <p> lapin : {this.props.user} and {this.props.ll}</p>
+
 
         </footer >
       </div >
@@ -97,15 +105,16 @@ class App extends Component {
 
 const stateToProps = state => {
   return {
-    user: state.UserReducer.currentUser.fullName,
+    user: state.UserReducer.currentUser,
     ll: state.UserReducer.lapin,
+    userFull: state.UserReducer.currentUserFull,
   }
 }
 
 const actionDisppatchToProps = dispatch => {
-
   return {
-    isConnected: (user) => dispatch({ type: 'STORE_USER', currentUser: user })
+    isConnected: (user) => dispatch({ type: 'STORE_USER', currentUser: user }),
+    isConnectedFULL: (user) => dispatch({ type: 'STORE_USER_FULL', currentUserFull: { user } })
   }
 }
 
